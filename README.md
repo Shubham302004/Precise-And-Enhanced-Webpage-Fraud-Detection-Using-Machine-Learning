@@ -183,7 +183,7 @@ Result Display
 
 ## F1 Score Comparison
 
-![F1 Score](Metrics/F1score.png)
+![F1 Score](Metrics/F1-score.png)
 
 ---
 

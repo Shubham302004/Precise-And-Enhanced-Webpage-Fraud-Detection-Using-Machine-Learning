@@ -1,0 +1,20 @@
+# Web Framework
+Flask
+flask-cors
+
+# ML & Data
+scikit-learn
+numpy
+pandas
+
+# Feature Extraction
+requests
+beautifulsoup4
+python-whois
+python-dateutil
+
+# URL / Search
+googlesearch-python
+
+# Production Server (optional)
+gunicorn

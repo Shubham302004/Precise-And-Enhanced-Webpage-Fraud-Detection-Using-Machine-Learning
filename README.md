@@ -151,7 +151,7 @@ Result Display
 
 ## 📊 Analytics Dashboard
 
-![Analytics](screenshots/Analysiss.png)
+![Analytics](screenshots/Analysis.png)
 
 ---
 
@@ -171,25 +171,25 @@ Result Display
 
 ## Accuracy Comparison
 
-![Accuracy](images/AccuracyHybrid.png)
+![Accuracy](images/Accuracy.png)
 
 ---
 
 ## Precision Comparison
 
-![Precision](images/PrecisionHybrid.png)
+![Precision](images/Precision.png)
 
 ---
 
 ## Recall Comparison
 
-![Recall](images/RecallHybrid.png)
+![Recall](images/Recall.png)
 
 ---
 
 ## F1 Score Comparison
 
-![F1 Score](images/F1scoreHybris.png)
+![F1 Score](images/F1score.png)
 
 ---
 

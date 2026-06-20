@@ -4,12 +4,6 @@
 
 ### Hybrid Stacking Ensemble for Real-Time Phishing URL Detection
 
-[![Python](https://img.shields.io/badge/Python-3.8+-3776AB?style=for-the-badge\&logo=python\&logoColor=white)](https://python.org)
-[![Flask](https://img.shields.io/badge/Flask-Backend-000000?style=for-the-badge\&logo=flask\&logoColor=white)](https://flask.palletsprojects.com)
-[![React](https://img.shields.io/badge/React-Frontend-61DAFB?style=for-the-badge\&logo=react\&logoColor=black)](https://reactjs.org)
-[![Scikit-Learn](https://img.shields.io/badge/Scikit--Learn-MachineLearning-F7931E?style=for-the-badge\&logo=scikit-learn\&logoColor=white)](https://scikit-learn.org)
-[![License](https://img.shields.io/badge/License-Educational-green?style=for-the-badge)]()
-
 **A hybrid machine learning system for real-time phishing URL detection using ensemble learning, heuristic analysis, and a full-stack web application.**
 
 Bachelor of Engineering Major Project
@@ -171,25 +165,25 @@ Result Display
 
 ## Accuracy Comparison
 
-![Accuracy](images/Accuracy.png)
+![Accuracy](Metrics/Accuracy.png)
 
 ---
 
 ## Precision Comparison
 
-![Precision](images/Precision.png)
+![Precision](Metrics/Precision.png)
 
 ---
 
 ## Recall Comparison
 
-![Recall](images/Recall.png)
+![Recall](Metrics/Recall.png)
 
 ---
 
 ## F1 Score Comparison
 
-![F1 Score](images/F1score.png)
+![F1 Score](Metrics/F1score.png)
 
 ---
 

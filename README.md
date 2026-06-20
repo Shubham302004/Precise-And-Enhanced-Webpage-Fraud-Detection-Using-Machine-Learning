@@ -139,31 +139,31 @@ Result Display
 
 ## 🏠 Home Page
 
-![Home](screenshots/home.png)
+![Home](screenshots/Home.png)
 
 ---
 
 ## 🔍 Detection Page
 
-![Detection](screenshots/detection.png)
+![Detection](screenshots/Detection.png)
 
 ---
 
 ## 📊 Analytics Dashboard
 
-![Analytics](screenshots/analytics.png)
+![Analytics](screenshots/Analysiss.png)
 
 ---
 
 ## ℹ️ About Page
 
-![About](screenshots/about.png)
+![About](screenshots/About.png)
 
 ---
 
 ## 📬 Contact Page
 
-![Contact](screenshots/contact.png)
+![Contact](screenshots/Contact.png)
 
 ---
 
@@ -171,25 +171,25 @@ Result Display
 
 ## Accuracy Comparison
 
-![Accuracy](images/accuracy.png)
+![Accuracy](images/AccuracyHybrid.png)
 
 ---
 
 ## Precision Comparison
 
-![Precision](images/precision.png)
+![Precision](images/PrecisionHybrid.png)
 
 ---
 
 ## Recall Comparison
 
-![Recall](images/recall.png)
+![Recall](images/RecallHybrid.png)
 
 ---
 
 ## F1 Score Comparison
 
-![F1 Score](images/f1score.png)
+![F1 Score](images/F1scoreHybris.png)
 
 ---
 

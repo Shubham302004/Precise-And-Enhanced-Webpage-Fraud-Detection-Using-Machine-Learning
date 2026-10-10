@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
+import API from "../api";
 
 export default function Detection() {
   const [url, setUrl] = useState("");
@@ -14,7 +15,7 @@ export default function Detection() {
     setError("");
 
     try {
-      const res = await axios.post("http://127.0.0.1:5000/predict", { url });
+      const res = await axios.post(API.predict, { url });
       setResult(res.data);
     } catch {
       setError("Unable to analyze the URL. Please try again.");

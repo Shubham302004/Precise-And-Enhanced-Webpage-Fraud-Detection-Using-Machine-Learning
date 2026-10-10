@@ -14,6 +14,7 @@ Behavior:
 import re
 from urllib.parse import urlparse
 import ipaddress
+import socket
 import requests
 from bs4 import BeautifulSoup
 import whois
@@ -24,6 +25,75 @@ import csv
 # -----------------------------
 # Helper utilities
 # -----------------------------
+MAX_REDIRECTS = 3
+
+def is_public_host(host):
+    """
+    True only if `host` resolves exclusively to public, routable addresses.
+
+    Guards against SSRF: a caller-supplied URL must not be able to make the
+    server fetch internal resources (localhost, 10/8, 172.16/12, 192.168/16,
+    169.254.169.254 cloud metadata, etc.). Fails closed - if the host cannot
+    be resolved we refuse rather than fetch blindly.
+    """
+    if not host:
+        return False
+    try:
+        infos = socket.getaddrinfo(host, None)
+    except Exception:
+        return False
+    if not infos:
+        return False
+    for info in infos:
+        addr = info[4][0]
+        try:
+            ip = ipaddress.ip_address(addr.split("%")[0])
+        except ValueError:
+            return False
+        # is_global excludes loopback, link-local (metadata), private,
+        # reserved, multicast and unspecified ranges.
+        if not ip.is_global:
+            return False
+    return True
+
+def safe_get(url, timeout=5):
+    """
+    GET `url`, following at most MAX_REDIRECTS redirects while re-validating
+    every hop, and never returning a non-public address's content.
+    Returns a requests.Response or None.
+    """
+    current = url
+    redirect_count = 0
+    for _ in range(MAX_REDIRECTS + 1):
+        try:
+            parsed = urlparse(current)
+        except Exception:
+            return None
+        if parsed.scheme not in ("http", "https") or not parsed.netloc:
+            return None
+        host = parsed.hostname or ""
+        if not is_public_host(host):
+            return None
+        try:
+            resp = requests.get(
+                current,
+                timeout=timeout,
+                allow_redirects=False,
+                headers={"User-Agent": "PhishingFeatureExtractor/1.0"},
+            )
+        except Exception:
+            return None
+        if resp.is_redirect and resp.headers.get("Location"):
+            # Resolve relative Location headers against the current URL.
+            current = requests.compat.urljoin(current, resp.headers["Location"])
+            redirect_count += 1
+            continue
+        # The caller reads response.history for the redirect-count feature,
+        # but redirects are followed manually here - expose the count instead.
+        resp.redirect_count = redirect_count
+        return resp
+    return None
+
 def safe_int(x, default=0):
     try:
         return int(x)
@@ -147,17 +217,26 @@ class FeatureExtraction:
         except Exception:
             self.domain = ""
 
-        # Fetch WHOIS (safe)
+        # Fetch WHOIS (safe): skip for non-public hosts so internal names
+        # are never resolved by an outbound lookup.
         try:
-            if self.domain:
+            if self.domain and is_public_host(self.domain):
                 self.whois_response = whois.whois(self.domain)
+            else:
+                self.whois_response = None
         except Exception:
             self.whois_response = None
 
-        # Fetch content (safe)
+        # Fetch content (safe): safe_get() blocks private/reserved addresses
+        # and re-validates every redirect hop (SSRF guard).
         try:
-            self.response = requests.get(self.url, timeout=5)
-            self.soup = BeautifulSoup(self.response.text, "html.parser")
+            self.response = safe_get(self.url, timeout=5)
+            if self.response is not None:
+                # Bound how much of an arbitrary page we are willing to hold.
+                text = self.response.text[:500_000]
+                self.soup = BeautifulSoup(text, "html.parser")
+            else:
+                self.soup = None
         except Exception:
             self.response = None
             self.soup = None
@@ -377,7 +456,11 @@ class FeatureExtraction:
         except Exception:
             return -1
     def qty_redirects(self):
-        return len(self.response.history) if self.response else -1
+        # safe_get() follows redirects manually, so the count lives on
+        # response.redirect_count rather than response.history.
+        if not self.response:
+            return -1
+        return getattr(self.response, "redirect_count", len(self.response.history))
     def url_google_index(self):
         # Placeholder (requires search engine API)
         return 0

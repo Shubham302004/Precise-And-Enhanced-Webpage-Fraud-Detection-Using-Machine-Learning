@@ -1,20 +1,23 @@
+# Versions pinned to the environment the project was developed & tested on.
+# Bump deliberately, then re-run the app to confirm behaviour is unchanged.
+
 # Web Framework
-Flask
-flask-cors
+Flask==3.1.2
+flask-cors==6.0.1
 
 # ML & Data
-scikit-learn
-numpy
-pandas
+scikit-learn==1.7.2
+numpy==2.3.3
+pandas==2.3.2
 
 # Feature Extraction
-requests
-beautifulsoup4
-python-whois
-python-dateutil
-
-# URL / Search
-googlesearch-python
+requests==2.32.5
+beautifulsoup4==4.13.5
+python-whois==0.9.5
+python-dateutil==2.9.0.post0
 
 # Production Server (optional)
-gunicorn
+gunicorn==23.0.0
+
+# NOTE: googlesearch-python was removed - it was never imported by app1.py
+# or feature1.py. Re-add only if a feature actually needs it.

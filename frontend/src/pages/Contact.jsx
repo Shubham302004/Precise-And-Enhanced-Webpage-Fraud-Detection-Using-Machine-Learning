@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
+import API from "../api";
 
 export default function Contact() {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
@@ -16,7 +17,7 @@ export default function Contact() {
     setStatus("");
 
     try {
-      await axios.post("http://127.0.0.1:5000/contact", form);
+      await axios.post(API.contact, form);
       setStatus("success");
       setForm({ name: "", email: "", message: "" });
     } catch {

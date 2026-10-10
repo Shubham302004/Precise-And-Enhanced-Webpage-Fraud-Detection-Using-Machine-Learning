@@ -221,31 +221,44 @@ Result Display
 URL_webpage/
 │
 ├── backend/
-│   ├── app1.py
-│   ├── feature1.py
-│   ├── requirements.txt
+│   ├── app1.py                      # Flask API (/predict, /analysis, /contact)
+│   ├── feature1.py                  # 111-feature URL extraction + SSRF guard
+│   ├── requirements.txt             # Pinned dependencies
+│   ├── Phishing_Detection_Final_Last.ipynb
+│   ├── dataset_cybersecurity_michelle.csv
 │   └── pickle/
 │       └── hybrid_stacking_model.pkl
 │
 ├── frontend/
 │   ├── src/
+│   │   ├── api.js                   # Central API base URL (VITE_API_BASE_URL)
+│   │   ├── components/
+│   │   │   └── Navbar.jsx
+│   │   └── pages/
+│   │       ├── Home.jsx
+│   │       ├── Detection.jsx
+│   │       ├── Analysis.jsx
+│   │       ├── About.jsx
+│   │       └── Contact.jsx
 │   ├── public/
+│   ├── .env.example
 │   ├── package.json
 │   └── vite.config.js
 │
-├── screenshots/
-│   ├── home.png
-│   ├── detection.png
-│   ├── analytics.png
-│   ├── about.png
-│   └── contact.png
+├── screenshots/                     # App page screenshots (README images)
+│   ├── Home.png
+│   ├── Detection.png
+│   ├── Analysis.png
+│   ├── About.png
+│   └── Contact.png
 │
-├── images/
-│   ├── accuracy.png
-│   ├── precision.png
-│   ├── recall.png
-│   └── f1score.png
+├── Metrics/                         # Model comparison graphs (README images)
+│   ├── Accuracy.png
+│   ├── Precision.png
+│   ├── Recall.png
+│   └── F1-Score.png
 │
+├── .gitignore
 └── README.md
 ```
 
@@ -277,6 +290,10 @@ Flask server runs at:
 http://127.0.0.1:5000
 ```
 
+> Debug mode is **off** by default (the Werkzeug debugger must never be
+> reachable outside your machine). Enable it locally with:
+> `FLASK_DEBUG=1 python app1.py`
+
 ---
 
 ## Frontend Setup
@@ -293,6 +310,13 @@ React application runs at:
 
 ```text
 http://localhost:5173
+```
+
+The frontend calls the API at `http://127.0.0.1:5000` by default. For any
+other environment, copy `.env.example` to `.env` and set:
+
+```bash
+VITE_API_BASE_URL=https://your-api-host
 ```
 
 ---

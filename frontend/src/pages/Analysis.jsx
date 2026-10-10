@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import API from "../api";
 import {
   BarChart,
   Bar,
@@ -46,7 +47,7 @@ export default function Analysis() {
 
     const fetchAnalysis = async () => {
       try {
-        const res = await axios.get("http://127.0.0.1:5000/analysis");
+        const res = await axios.get(API.analysis);
         setMetrics(res.data.metrics);
         setSamples(res.data.samples_evaluated);
         setConfusion(res.data.confusion ?? null);
